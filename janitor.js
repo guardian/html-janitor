@@ -1,3 +1,4 @@
+/*jshint indent: 2, evil: false, boss: true, bitwise: true, curly: true, eqeqeq: true, newcap: true, laxbreak: true, undef: true, white: true, browser: true, jquery: true*/
 /*
 
 The MIT License (MIT)
@@ -23,70 +24,74 @@ SOFTWARE.
 
 */
 
-(function($) {
-  $.fn.janitor = function(config) {
-    config = $.extend({
-      tags: {},
-      protocols: [],
-      protocolAttrs: ['src', 'href'],
-    }, (typeof config === 'undefined') ? {} : config);
+(function () {
+  var Janitor = {
+    clean: function (html, config) {
+      config = $.extend({
+        tags: {},
+        protocols: [],
+        protocolAttrs: ['src', 'href']
+      }, (typeof config === 'undefined') ? {} : config);
 
-    var sandbox = document.createElement('div');
-    sandbox.innerHTML = $(this).val();
+      var sandbox = document.createElement('div');
+      sandbox.innerHTML = html;
 
-    var sanitize = function(parentNode) {
-      for (var i = 0; i < parentNode.childNodes.length; i += 1) {
-        var node = parentNode.childNodes[i],
-            nodeName = node.nodeName.toLowerCase(),
-            attrs = config.tags[nodeName];
+      var sanitize = function (parentNode) {
+        for (var i = 0; i < parentNode.childNodes.length; i += 1) {
+          var node = parentNode.childNodes[i],
+              nodeName = node.nodeName.toLowerCase(),
+              attrs = config.tags[nodeName];
 
-        // Ignore text nodes and nodes that have already been sanitized
-        if (node.nodeType === 3 || node._sanitized) {
-          continue;
-        }
-
-        // Drop tag entirely
-        if (!config.tags[nodeName]) {
-          while (node.childNodes.length > 0) {
-            parentNode.insertBefore(node.childNodes[0], node);   
-          }
-          parentNode.removeChild(node);
-
-          sanitize(parentNode);
-          break;
-        }
-
-        // Sanitize attributes
-        for (var a = 0; a < node.attributes.length; a += 1) {
-          var attr = node.attributes[a],
-              attrName = attr.name.toLowerCase();
-
-          // Allow attribute?
-          if (attrs.indexOf(attrName) === -1) {
-            node.removeAttribute(node.attributes[a].name);
+          // Ignore text nodes and nodes that have already been sanitized
+          if (node.nodeType === 3 || node._sanitized) {
+            continue;
           }
 
-          // Allow protocol?
-          if (config.protocolAttrs.indexOf(attrName) !== -1) {
-            var url = document.createElement('a');
-            url.href = attr.value;
+          // Drop tag entirely
+          if (!config.tags[nodeName]) {
+            while (node.childNodes.length > 0) {
+              parentNode.insertBefore(node.childNodes[0], node);   
+            }
+            parentNode.removeChild(node);
 
-            if (config.protocols.indexOf(url.protocol.replace(/\:$/, '')) === -1) {
-              node.setAttribute(node.attributes[a].name, '');
+            sanitize(parentNode);
+            break;
+          }
+
+          // Sanitize attributes
+          for (var a = 0; a < node.attributes.length; a += 1) {
+            var attr = node.attributes[a],
+                attrName = attr.name.toLowerCase();
+
+            // Allow attribute?
+            if (attrs.indexOf(attrName) === -1) {
+              node.removeAttribute(node.attributes[a].name);
+            }
+
+            // Allow protocol?
+            if (config.protocolAttrs.indexOf(attrName) !== -1) {
+              var url = document.createElement('a');
+              url.href = attr.value;
+
+              if (config.protocols.indexOf(url.protocol.replace(/\:$/, '')) === -1) {
+                node.setAttribute(node.attributes[a].name, '');
+              }
             }
           }
+
+          // Sanitize children
+          sanitize(node);
+
+          // Mark node as sanitized so it's ignored in future runs
+          node._sanitized = true;
         }
+      };
 
-        // Sanitize children
-        sanitize(node);
+      sanitize(sandbox);
 
-        // Mark node as sanitized so it's ignored in future runs
-        node._sanitized = true;
-      }
-    };
-
-    sanitize(sandbox);
-
-    return sandbox.innerHTML;
+      return sandbox.innerHTML;
+    }
   };
-})(jQuery);
+
+  window.Janitor = Janitor;
+})();

@@ -31,6 +31,8 @@
 
     textarea {
       font-family: courier;
+      height: 100px;
+      width: 400px
     }
     </style>
   </head>
@@ -43,7 +45,7 @@
       <h3 style="color: #f00">
         Dirty HTML
       </h3>
-      <textarea id="dirty" style="height: 100px; width: 400px"></textarea>
+      <textarea id="dirty"></textarea>
 
       <p>
         <button id="doit">Sanitize</button>
@@ -53,7 +55,7 @@
         Cleaner HTML
       </h3>
 
-      <textarea id="clean" style="height: 100px; width: 400px"></textarea>
+      <textarea id="clean"></textarea>
     </div>
 
     <div class="config_wrapper">
@@ -61,7 +63,7 @@
         Configuration
       </h3>
 
-      <textarea id="config" style="height: 100px; width: 400px">
+      <textarea id="config">
 {
   tags: {
     div: [],
@@ -80,8 +82,7 @@
         var config;
 
         eval('config = ' + $('#config').val());
-
-        $('#clean').val(Janitor.clean($('#dirty').val(), config));
+        $('#clean').val($('#dirty').janitor(config));
       }
 
       execute();
