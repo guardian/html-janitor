@@ -9,7 +9,7 @@ HTML, chances are it's going to be messed up now and then, and this causes many 
 drop content entirely.
 
 Janitor-js uses the best DOM parser for janky HTML -- the browser.  It can be run client-side or
-server-side with V8.
+server-side with headless WebKit.
 
 ## Examples
 
