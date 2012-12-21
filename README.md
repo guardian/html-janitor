@@ -23,7 +23,7 @@ Only allow A and B tags, with "href" being the only allowed attribute:
     }
     
     Janitor.clean('<div><b>bold text</b><a onclick="foo()" href=#">hi</a></div>', config)
-      -> '<b>bold text</b><a href=#">hi</a>'
+      -> '<b>bold text</b><a href="#">hi</a>'
       
 Fix unclosed tags:
 
