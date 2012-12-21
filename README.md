@@ -1,15 +1,15 @@
 janitor-js
 ==========
 
-### Sanitize HTML tags, attributes, and protocols using the native DOM parser.
+### Sanitize HTML tags, attributes, and protocols using a native DOM parser.
 
 Parsing, cleaning, and sanitizing HTML is a pain in the ass.  There are lots of libraries that do it, 
 but they require well-formed or psuedo well-formed HTML.  If you're cleaning or parsing user-generated
 HTML, chances are it's going to be messed up now and then, and this causes many HTML parsers to barf or
 drop content entirely.
 
-Janitor-js uses the best DOM parser for janky HTML -- the browser.  It can be run client-side or
-server-side with headless WebKit.
+Janitor-js uses the best DOM parser for untrusted HTML -- the browser.  It can be run client-side or
+server-side with a headless browser.
 
 ## Examples
 
