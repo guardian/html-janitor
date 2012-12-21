@@ -25,13 +25,20 @@ SOFTWARE.
 */
 
 (function () {
+  //in browser
+  if(typeof window !== 'undefined'){
+  } else {
+    var jsdom = require('jsdom').jsdom;
+    var doc = jsdom("<html><body></body></html>");
+    var win = doc.createWindow();
+    var document = win.document;
+  }
   var Janitor = {
     clean: function (html, config) {
-      config = $.extend({
-        tags: {},
-        protocols: [],
-        protocolAttrs: ['src', 'href']
-      }, (typeof config === 'undefined') ? {} : config);
+      config = config || {};
+      config.tags = config.tags || {};
+      config.protocols = config.protocols || [];
+      config.protocolAttrs = config.protocolAttrs || ['src', 'href'];
 
       var sandbox = document.createElement('div');
       sandbox.innerHTML = html;
@@ -93,5 +100,10 @@ SOFTWARE.
     }
   };
 
-  window.Janitor = Janitor;
+  //in browser
+  if(typeof window !== 'undefined'){
+    window.Janitor = Janitor;
+  } else {
+    module.exports = Janitor;
+  }
 })();

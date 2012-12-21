@@ -1,0 +1,25 @@
+{
+  "name": "html-janitor",
+  "version": "0.0.0",
+  "description": "sanitize HTML using DOM parser",
+  "main": "janitor.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fretlessjazz/janitor-js"
+  },
+  "keywords": [
+    "html",
+    "sanitize",
+    "input",
+    "expect.js"
+  ],
+  "author": "James Ryan",
+  "license": "MIT",
+  "dependencies": {
+    "mocha": "~1.7.4",
+    "jsdom": "~0.3.3"
+  }
+}
