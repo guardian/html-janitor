@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "mocha": "~1.7.4",
-    "jsdom": "~0.3.3"
+    "jsdom": "~0.3.3",
+    "expect.js": "~0.2.0"
   }
 }
