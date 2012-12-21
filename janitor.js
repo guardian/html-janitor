@@ -1,4 +1,5 @@
 /*jshint indent: 2, evil: false, boss: true, bitwise: true, curly: true, eqeqeq: true, newcap: true, laxbreak: true, undef: true, white: true, browser: true, jquery: true*/
+/*globals require module */
 /*
 
 The MIT License (MIT)
@@ -25,14 +26,15 @@ SOFTWARE.
 */
 
 (function () {
-  //in browser
-  if(typeof window !== 'undefined'){
-  } else {
+
+  // Support non-browser contexts via jsdom
+  if (typeof window === 'undefined') {
     var jsdom = require('jsdom').jsdom;
     var doc = jsdom("<html><body></body></html>");
     var win = doc.createWindow();
     var document = win.document;
   }
+
   var Janitor = {
     clean: function (html, config) {
       config = config || {};
@@ -100,10 +102,11 @@ SOFTWARE.
     }
   };
 
-  //in browser
-  if(typeof window !== 'undefined'){
+  // Make Janitor available in both browser and non-browser contexts
+  if (typeof window !== 'undefined') {
     window.Janitor = Janitor;
-  } else {
+  }
+  else {
     module.exports = Janitor;
   }
 })();
