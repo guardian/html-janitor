@@ -8,8 +8,8 @@ but they require well-formed or psuedo well-formed HTML.  If you're cleaning or 
 HTML, chances are it's going to be messed up now and then, and this causes many HTML parsers to barf or
 drop content entirely.
 
-Janitor-js uses the best DOM parser available for untrusted HTML -- browsers.  It can be run client-side or
-server-side with a headless browser.
+Janitor-js uses the best DOM parser available for untrusted HTML -- a browser.  Janitor can be run 
+client-side or server-side in a headless browser.
 
 ## Examples
 
