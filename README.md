@@ -1,6 +1,8 @@
 janitor-js
 ==========
 
+[![Build Status](https://secure.travis-ci.org/fretlessjazz/janitor-js.png)](http://travis-ci.org/fretlessjazz/janitor-js)
+
 ### Sanitize HTML tags, attributes, and protocols using a native DOM parser.
 
 Parsing, cleaning, and sanitizing HTML is a pain in the ass.  There are lots of libraries that do it, 
