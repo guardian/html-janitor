@@ -28,11 +28,16 @@ SOFTWARE.
 (function () {
 
   // Support non-browser contexts via jsdom
+  var doc;
   if (typeof window === 'undefined') {
     var jsdom = require('jsdom').jsdom;
-    var doc = jsdom("<html><body></body></html>");
-    var win = doc.createWindow();
-    var document = win.document;
+    var jsDomDoc = jsdom("<html><body></body></html>");
+    // These variables are hoisted to the top of the function scope, so we give
+    // them nicknames to avoid conflicts when ran in the browser.
+    var win = jsDomDoc.createWindow();
+    doc = win.document;
+  } else {
+    doc = document;
   }
 
   var Janitor = {
@@ -42,7 +47,7 @@ SOFTWARE.
       config.protocols = config.protocols || [];
       config.protocolAttrs = config.protocolAttrs || ['src', 'href'];
 
-      var sandbox = document.createElement('div');
+      var sandbox = doc.createElement('div');
       sandbox.innerHTML = html;
 
       var sanitize = function (parentNode) {
@@ -59,7 +64,7 @@ SOFTWARE.
           // Drop tag entirely
           if (!config.tags[nodeName]) {
             while (node.childNodes.length > 0) {
-              parentNode.insertBefore(node.childNodes[0], node);   
+              parentNode.insertBefore(node.childNodes[0], node);
             }
             parentNode.removeChild(node);
 
@@ -79,7 +84,7 @@ SOFTWARE.
 
             // Allow protocol?
             if (config.protocolAttrs.indexOf(attrName) !== -1) {
-              var url = document.createElement('a');
+              var url = doc.createElement('a');
               url.href = attr.value;
 
               if (config.protocols.indexOf(url.protocol.replace(/\:$/, '')) === -1) {
@@ -105,8 +110,7 @@ SOFTWARE.
   // Make Janitor available in both browser and non-browser contexts
   if (typeof window !== 'undefined') {
     window.Janitor = Janitor;
-  }
-  else {
+  } else {
     module.exports = Janitor;
   }
 })();
