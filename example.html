@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Sanitize</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="janitor.js"></script>
     <style type="text/css">
     body {
@@ -36,7 +35,7 @@
   </head>
   <body>
     <h1>
-      Janitor-js &mdash; jQuery plugin for sanitizing HTML
+      Janitor-js &mdash; for sanitizing HTML
     </h1>
 
     <div class="code_wrapper">
@@ -75,19 +74,20 @@
     </div>
 
     <script type="text/javascript">
-    (function($) {
+    (function () {
       var execute = function () {
         var config;
 
-        eval('config = ' + $('#config').val());
+        eval('config = ' + document.querySelector('#config').value);
 
-        $('#clean').val(Janitor.clean($('#dirty').val(), config));
+        document.querySelector('#clean').value = Janitor.clean(document.querySelector('#dirty').value,
+          config);
       }
 
       execute();
 
-      $('#doit').on('click', execute);
-    })(jQuery);
+      document.querySelector('#doit').addEventListener('click', execute);
+    })();
     </script>
   </body>
 </html>
