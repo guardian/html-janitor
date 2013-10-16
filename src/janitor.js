@@ -21,9 +21,9 @@
 
   Janitor.prototype._sanitize = function (parentNode) {
     for (var i = 0; i < parentNode.childNodes.length; i += 1) {
-      var node = parentNode.childNodes[i],
-          nodeName = node.nodeName.toLowerCase(),
-          attrs = this.config.tags[nodeName];
+      var node = parentNode.childNodes[i];
+      var nodeName = node.nodeName.toLowerCase();
+      var attrs = this.config.tags[nodeName];
 
       // Ignore text nodes and nodes that have already been sanitized
       if (node.nodeType === 3 || node._sanitized) {
@@ -43,8 +43,8 @@
 
       // Sanitize attributes
       for (var a = 0; a < node.attributes.length; a += 1) {
-        var attr = node.attributes[a],
-            attrName = attr.name.toLowerCase();
+        var attr = node.attributes[a];
+        var attrName = attr.name.toLowerCase();
 
         // Allow attribute?
         if (attrs.indexOf(attrName) === -1) {
