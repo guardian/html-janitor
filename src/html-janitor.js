@@ -7,11 +7,11 @@
   }
 }(this, function () {
 
-  function Janitor(config) {
+  function HTMLJanitor(config) {
     this.config = config;
   }
 
-  Janitor.prototype.clean = function (html) {
+  HTMLJanitor.prototype.clean = function (html) {
     var sandbox = document.createElement('div');
     sandbox.innerHTML = html;
 
@@ -20,7 +20,7 @@
     return sandbox.innerHTML;
   };
 
-  Janitor.prototype._sanitize = function (parentNode) {
+  HTMLJanitor.prototype._sanitize = function (parentNode) {
     var treeWalker = createTreeWalker(parentNode);
     var node = treeWalker.firstChild();
     if (!node) { return; }
@@ -70,6 +70,6 @@
     return document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT);
   }
 
-  return Janitor;
+  return HTMLJanitor;
 
 }));
