@@ -14,5 +14,8 @@
   "license": "BSD",
   "bugs": {
     "url": "https://github.com/OliverJAsh/html-janitor/issues"
+  },
+  "devDependencies": {
+    "testem": "~0.5.4"
   }
 }
