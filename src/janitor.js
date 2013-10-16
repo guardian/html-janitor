@@ -6,6 +6,7 @@
     root.amdWeb = factory();
   }
 }(this, function () {
+
   function Janitor(config) {
     this.config = config;
   }
@@ -20,8 +21,11 @@
   };
 
   Janitor.prototype._sanitize = function (parentNode) {
-    for (var i = 0; i < parentNode.childNodes.length; i += 1) {
-      var node = parentNode.childNodes[i];
+    var treeWalker = createTreeWalker(parentNode);
+    var node = treeWalker.firstChild();
+    if (!node) { return; }
+
+    do {
       var nodeName = node.nodeName.toLowerCase();
       var allowedAttrs = this.config.tags[nodeName];
 
@@ -59,8 +63,13 @@
 
       // Mark node as sanitized so it's ignored in future runs
       node._sanitized = true;
-    }
+    } while (node = treeWalker.nextSibling());
   };
 
+  function createTreeWalker(node) {
+    return document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT);
+  }
+
   return Janitor;
+
 }));
