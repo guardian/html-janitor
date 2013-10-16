@@ -15,5 +15,6 @@
   ],
   "devDependencies": {
     "requirejs": "~2.1.9"
-  }
+  },
+  "main": "/src/janitor.js"
 }
