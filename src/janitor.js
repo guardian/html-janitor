@@ -23,7 +23,7 @@
     for (var i = 0; i < parentNode.childNodes.length; i += 1) {
       var node = parentNode.childNodes[i];
       var nodeName = node.nodeName.toLowerCase();
-      var attrs = this.config.tags[nodeName];
+      var allowedAttrs = this.config.tags[nodeName];
 
       // Ignore text nodes and nodes that have already been sanitized
       if (node.nodeType === 3 || node._sanitized) {
@@ -47,7 +47,7 @@
         var attrName = attr.name.toLowerCase();
 
         // Allow attribute?
-        if (attrs.indexOf(attrName) === -1) {
+        if (allowedAttrs.indexOf(attrName) === -1) {
           node.removeAttribute(node.attributes[a].name);
         }
       }
