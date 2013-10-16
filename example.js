@@ -1,12 +1,12 @@
 require({
   baseUrl: '/src'
-}, [ 'janitor' ], function (Janitor) {
-  var janitor = new Janitor({
+}, [ 'html-janitor' ], function (HTMLJanitor) {
+  var janitor = new HTMLJanitor({
     tags: {
       p: []
     }
   });
-  
+
   var p = document.createElement('p');
   p.setAttribute('style', 'font-size: 16px;');
   p.setAttribute('class', 'example-class');

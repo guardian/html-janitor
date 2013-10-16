@@ -1,4 +1,4 @@
-define([ 'janitor' ], function (Janitor) {
+define([ 'html-janitor' ], function (HTMLJanitor) {
 
   describe('janitor', function () {
     var janitor;
@@ -9,7 +9,7 @@ define([ 'janitor' ], function (Janitor) {
     };
 
     beforeEach(function () {
-      janitor = new Janitor(config);
+      janitor = new HTMLJanitor(config);
     });
 
     it('should clean attributes not in the whitelist', function () {
