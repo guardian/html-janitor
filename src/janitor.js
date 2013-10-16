@@ -49,6 +49,8 @@
         // Allow attribute?
         if (allowedAttrs.indexOf(attrName) === -1) {
           node.removeAttribute(node.attributes[a].name);
+          // Shift the array to continue looping.
+          a = a - 1;
         }
       }
 
