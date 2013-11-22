@@ -25,6 +25,18 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       div.appendChild(p);
       expect(janitor.clean(div.outerHTML)).toBe('<p></p>');
     });
+
+    it('should not keep the inner text of a script element', function () {
+      var script = document.createElement('script');
+      script.innerText = 'window.alert(\'foo\');';
+      expect(janitor.clean(script.outerHTML)).toBe('');
+    });
+
+    it('should not keep the inner text of a style element', function () {
+      var style = document.createElement('style');
+      style.innerText = '.foo {}';
+      expect(janitor.clean(style.outerHTML)).toBe('');
+    });
   });
 
 });

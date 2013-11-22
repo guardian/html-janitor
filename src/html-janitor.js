@@ -36,8 +36,11 @@
 
       // Drop tag entirely
       if (!this.config.tags[nodeName]) {
-        while (node.childNodes.length > 0) {
-          parentNode.insertBefore(node.childNodes[0], node);
+        // Do not keep the inner text of SCRIPT/STYLE elements.
+        if (! (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
+          while (node.childNodes.length > 0) {
+            parentNode.insertBefore(node.childNodes[0], node);
+          }
         }
         parentNode.removeChild(node);
 
