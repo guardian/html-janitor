@@ -1,5 +1,5 @@
 require({
-  baseUrl: '/src'
+  baseUrl: './src'
 }, [ 'html-janitor' ], function (HTMLJanitor) {
   var janitor = new HTMLJanitor({
     tags: {
