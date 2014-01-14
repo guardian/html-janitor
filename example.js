@@ -3,7 +3,7 @@ require({
 }, [ 'html-janitor' ], function (HTMLJanitor) {
   var janitor = new HTMLJanitor({
     tags: {
-      p: { foo: undefined, bar: 'baz' }
+      p: { foo: true, bar: 'baz' }
     }
   });
 

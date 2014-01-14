@@ -4,7 +4,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var janitor;
     var config = {
       tags: {
-        p: { foo: undefined, bar: 'baz' }
+        p: { foo: true, bar: 'baz' }
       }
 
 
