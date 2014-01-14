@@ -54,7 +54,8 @@
         var attrName = attr.name.toLowerCase();
 
         // Allow attribute?
-        if (allowedAttrs.indexOf(attrName) === -1) {
+        if (Object.keys(allowedAttrs).indexOf(attrName) === -1
+          || (allowedAttrs[attrName] && node.getAttribute(node.attributes[a].name) !== allowedAttrs[attrName])) {
           node.removeAttribute(node.attributes[a].name);
           // Shift the array to continue looping.
           a = a - 1;
