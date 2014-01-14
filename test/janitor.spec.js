@@ -4,8 +4,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var janitor;
     var config = {
       tags: {
-        p: { foo: undefined, bar: 'baz' },
-        blockquote: { class: 'quoted' }
+        p: { foo: undefined, bar: 'baz' }
       }
 
 
