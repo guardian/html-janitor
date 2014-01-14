@@ -55,8 +55,9 @@
 
         // Allow attribute?
         var allowedAttrValue = allowedAttrs[attrName];
-        if (Object.keys(allowedAttrs).indexOf(attrName) === -1
-          || (allowedAttrValue !== true && attr.value !== allowedAttrValue)) {
+        var notInAttrList = ! allowedAttrValue;
+        var valueNotAllowed = allowedAttrValue !== true && attr.value !== allowedAttrValue;
+        if (notInAttrList || valueNotAllowed) {
           node.removeAttribute(attr.name);
           // Shift the array to continue looping.
           a = a - 1;
