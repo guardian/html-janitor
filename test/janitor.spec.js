@@ -4,8 +4,10 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var janitor;
     var config = {
       tags: {
-        p: []
+        p: { foo: true, bar: 'baz' }
       }
+
+
     };
 
     beforeEach(function () {
@@ -15,8 +17,15 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     it('should clean attributes not in the whitelist', function () {
       var p = document.createElement('p');
       p.setAttribute('style', 'font-size: 16px;');
-      p.setAttribute('class', 'example-class');
+      p.setAttribute('bar', 'not baz');
       expect(janitor.clean(p.outerHTML)).toBe('<p></p>');
+    });
+
+    it('should not clean attributes in the whitelist', function () {
+      var p = document.createElement('p');
+      p.setAttribute('foo', 'true');
+      p.setAttribute('bar', 'baz');
+      expect(janitor.clean(p.outerHTML)).toBe('<p foo="true" bar="baz"></p>');
     });
 
     it('should remove elements not in the whitelist', function () {
