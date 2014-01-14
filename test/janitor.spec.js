@@ -18,7 +18,6 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     it('should clean attributes not in the whitelist', function () {
       var p = document.createElement('p');
       p.setAttribute('style', 'font-size: 16px;');
-      p.setAttribute('class', 'example-class');
       p.setAttribute('bar', 'not baz');
       expect(janitor.clean(p.outerHTML)).toBe('<p></p>');
     });
