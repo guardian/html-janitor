@@ -9,7 +9,7 @@ Uses UMD for support in AMD and Common JS environments.
 
 ## Installation
 
-``` js
+```
 bower install html-janitor
 # or
 npm install html-janitor
