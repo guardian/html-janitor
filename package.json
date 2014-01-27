@@ -2,18 +2,18 @@
   "name": "html-janitor",
   "version": "0.1.0",
   "description": "",
-  "main": "janitor.js",
+  "main": "src/html-janitor.js",
   "scripts": {
     "test": "karma start --single-run"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/OliverJAsh/html-janitor.git"
+    "url": "git://github.com/guardian/html-janitor.git"
   },
-  "author": "",
-  "license": "BSD",
+  "author": "Oliver Joseph Ash <oliverjash@icloud.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/OliverJAsh/html-janitor/issues"
+    "url": "https://github.com/guardian/html-janitor/issues"
   },
   "devDependencies": {
     "karma-script-launcher": "~0.1.0",
