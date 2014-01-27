@@ -34,8 +34,20 @@
         continue;
       }
 
-      // Drop tag entirely
-      if (!this.config.tags[nodeName]) {
+      var isInlineElement = nodeName === 'b';
+      var containsBlockElement;
+      if (isInlineElement) {
+        containsBlockElement = Array.prototype.some.call(node.childNodes, function (childNode) {
+          // TODO: test other block elements
+          return childNode.nodeName === 'P';
+        });
+      }
+
+      var isInvalid = isInlineElement && containsBlockElement;
+
+      // Drop tag entirely according to the whitelist *and* if the markup
+      // is invalid.
+      if (!this.config.tags[nodeName] || isInvalid) {
         // Do not keep the inner text of SCRIPT/STYLE elements.
         if (! (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
           while (node.childNodes.length > 0) {

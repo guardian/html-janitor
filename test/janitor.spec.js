@@ -4,6 +4,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var janitor;
     var config = {
       tags: {
+        b: {},
         p: { foo: true, bar: 'baz' }
       }
 
@@ -45,6 +46,13 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var style = document.createElement('style');
       style.innerText = '.foo {}';
       expect(janitor.clean(style.outerHTML)).toBe('');
+    });
+
+    it('should clean invalid markup', function () {
+      var b = document.createElement('b');
+      var p = document.createElement('p');
+      b.appendChild(p);
+      expect(janitor.clean(b.outerHTML)).toBe('<p></p>');
     });
   });
 
