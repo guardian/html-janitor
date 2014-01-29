@@ -35,6 +35,12 @@
         continue;
       }
 
+      // Remove all comments
+      if (node.nodeType === Node.COMMENT_NODE) {
+        parentNode.removeChild(node);
+        continue;
+      }
+
       var isInlineElement = nodeName === 'b';
       var containsBlockElement;
       if (isInlineElement) {
@@ -86,7 +92,8 @@
   };
 
   function createTreeWalker(node) {
-    return document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT);
+    return document.createTreeWalker(node,
+                                     NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT);
   }
 
   return HTMLJanitor;

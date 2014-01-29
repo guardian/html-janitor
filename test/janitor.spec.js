@@ -54,6 +54,12 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       b.appendChild(p);
       expect(janitor.clean(b.outerHTML)).toBe('<p></p>');
     });
+
+    it('should remove comments', function () {
+      var p = document.createElement('p');
+      p.innerHTML = 'Hello <b>world</b> <!-- a salutation -->!';
+      expect(janitor.clean(p.outerHTML)).toBe('<p>Hello <b>world</b> !</p>');
+    });
   });
 
 });
