@@ -23,7 +23,7 @@
 
     this._sanitize(sandbox);
 
-    return sandbox.innerHTML;
+    return sandbox.innerHTML.trim();
   };
 
   HTMLJanitor.prototype._sanitize = function (parentNode) {
