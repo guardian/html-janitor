@@ -5,7 +5,9 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var config = {
       tags: {
         b: {},
-        p: { foo: true, bar: 'baz' }
+        p: { foo: true, bar: 'baz' },
+        ul: {},
+        li: {}
       }
 
 
@@ -53,6 +55,12 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var p = document.createElement('p');
       b.appendChild(p);
       expect(janitor.clean(b.outerHTML)).toBe('<p></p>');
+    });
+
+    it('should clean paragraphs in lists', function () {
+      var ul = document.createElement('ul');
+      ul.innerHTML = '<li><p>Some text</p></li>';
+      expect(janitor.clean(ul.outerHTML)).toBe('<ul><li>Some text</li></ul>');
     });
 
     it('should remove comments', function () {
