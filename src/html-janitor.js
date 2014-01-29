@@ -30,7 +30,8 @@
       var allowedAttrs = this.config.tags[nodeName];
 
       // Ignore text nodes and nodes that have already been sanitized
-      if (node.nodeType === 3 || node._sanitized) {
+      // FIXME: Not sure we're getting TEXT_NODE as the walker only walks ELEMENT_NODEs?
+      if (node.nodeType === Node.TEXT_NODE || node._sanitized) {
         continue;
       }
 
