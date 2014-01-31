@@ -50,7 +50,8 @@
       // Remove all comments
       if (node.nodeType === Node.COMMENT_NODE) {
         parentNode.removeChild(node);
-        continue;
+        this._sanitize(parentNode);
+        break;
       }
 
       var isInlineElement = nodeName === 'b';
