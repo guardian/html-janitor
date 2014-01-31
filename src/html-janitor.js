@@ -40,6 +40,13 @@
         continue;
       }
 
+      if (node.nodeType === Node.TEXT_NODE) {
+        if (node.data === '\n') {
+          parentNode.removeChild(node);
+        }
+        continue;
+      }
+
       // Remove all comments
       if (node.nodeType === Node.COMMENT_NODE) {
         parentNode.removeChild(node);
@@ -103,7 +110,7 @@
 
   function createTreeWalker(node) {
     return document.createTreeWalker(node,
-                                     NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT);
+                                     NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT);
   }
 
   return HTMLJanitor;

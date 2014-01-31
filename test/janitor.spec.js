@@ -68,6 +68,11 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       p.innerHTML = 'Hello <b>world</b> <!-- a salutation -->!';
       expect(janitor.clean(p.outerHTML)).toBe('<p>Hello <b>world</b> !</p>');
     });
+
+    it('should remove new lines', function () {
+      var html = '<p>\n</p>';
+      expect(janitor.clean(html)).toBe('<p></p>');
+    });
   });
 
 });
