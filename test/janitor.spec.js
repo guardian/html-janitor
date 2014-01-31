@@ -73,6 +73,16 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var html = '<p></p>\n<p></p>';
       expect(janitor.clean(html)).toBe('<p></p><p></p>');
     });
+
+    it('should remove text nodes before block elements', function () {
+      var html = '\n<p></p>';
+      expect(janitor.clean(html)).toBe('<p></p>');
+    });
+
+    it('should remove text nodes after block elements', function () {
+      var html = '<p></p>\n';
+      expect(janitor.clean(html)).toBe('<p></p>');
+    });
   });
 
 });
