@@ -118,7 +118,7 @@
 
       // Mark node as sanitized so it's ignored in future runs
       node._sanitized = true;
-    } while (node = treeWalker.nextSibling());
+    } while ((node = treeWalker.nextSibling()));
   };
 
   function createTreeWalker(node) {
