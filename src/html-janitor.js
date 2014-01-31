@@ -47,8 +47,8 @@
         // `contenteditable` in Firefox: http://jsbin.com/EyuKase/1/edit?js,output
         // FIXME: make this an option?
         if (node.data.trim() === ''
-            && (node.previousElementSibling && isBlockElement(node.previousElementSibling)
-                || node.nextElementSibling && isBlockElement(node.nextElementSibling))) {
+            && ((node.previousElementSibling && isBlockElement(node.previousElementSibling))
+                 || (node.nextElementSibling && isBlockElement(node.nextElementSibling)))) {
           parentNode.removeChild(node);
           this._sanitize(parentNode);
           break;
