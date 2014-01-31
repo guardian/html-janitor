@@ -41,10 +41,16 @@
       }
 
       if (node.nodeType === Node.TEXT_NODE) {
-        if (node.data === '\n') {
+        // N.B.: This heuristic could change. Very specific to a bug with
+        // `contenteditable` in Firefox: http://jsbin.com/EyuKase/1/edit?js,output
+        // FIXME: make this an option?
+        if (node.previousSibling && isBlockElement(node.previousSibling)) {
           parentNode.removeChild(node);
+          this._sanitize(parentNode);
+          break;
+        } else {
+          continue;
         }
-        continue;
       }
 
       // Remove all comments
