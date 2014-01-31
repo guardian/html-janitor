@@ -23,7 +23,7 @@
 
     this._sanitize(sandbox);
 
-    return sandbox.innerHTML.trim();
+    return sandbox.innerHTML;
   };
 
   HTMLJanitor.prototype._sanitize = function (parentNode) {
@@ -41,10 +41,14 @@
       }
 
       if (node.nodeType === Node.TEXT_NODE) {
+        // If this text node is just whitespace and the previous or next element
+        // sibling is a block element, remove it
         // N.B.: This heuristic could change. Very specific to a bug with
         // `contenteditable` in Firefox: http://jsbin.com/EyuKase/1/edit?js,output
         // FIXME: make this an option?
-        if (node.previousSibling && isBlockElement(node.previousSibling)) {
+        if (node.data.trim() === ''
+            && (node.previousElementSibling && isBlockElement(node.previousElementSibling)
+                || node.nextElementSibling && isBlockElement(node.nextElementSibling))) {
           parentNode.removeChild(node);
           this._sanitize(parentNode);
           break;
