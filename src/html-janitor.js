@@ -64,6 +64,8 @@
       // Block elements should not be nested (e.g. <li><p>...); if
       // they are, we want to unwrap the inner block element.
       var isNotTopContainer = !! parentNode.parentNode;
+      // TODO: Don't hardcore this — this is not invalid markup. Should be
+      // configurable.
       var isNestedBlockElement =
             isBlockElement(parentNode) &&
             isBlockElement(node) &&
