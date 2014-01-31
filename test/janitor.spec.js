@@ -69,9 +69,9 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       expect(janitor.clean(p.outerHTML)).toBe('<p>Hello <b>world</b> !</p>');
     });
 
-    it('should remove new lines', function () {
-      var html = '<p>\n</p>';
-      expect(janitor.clean(html)).toBe('<p></p>');
+    it('should remove text nodes in-between block elements', function () {
+      var html = '<p></p>\n<p></p>';
+      expect(janitor.clean(html)).toBe('<p></p><p></p>');
     });
   });
 
