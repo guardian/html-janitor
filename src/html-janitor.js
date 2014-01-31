@@ -35,9 +35,8 @@
       var nodeName = node.nodeName.toLowerCase();
       var allowedAttrs = this.config.tags[nodeName];
 
-      // Ignore text nodes and nodes that have already been sanitized
-      // FIXME: Not sure we're getting TEXT_NODE as the walker only walks ELEMENT_NODEs?
-      if (node.nodeType === Node.TEXT_NODE || node._sanitized) {
+      // Ignore nodes that have already been sanitized
+      if (node._sanitized) {
         continue;
       }
 
