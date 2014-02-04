@@ -1,7 +1,7 @@
 // UMD
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(factory);
+    define('html-janitor',factory);
   } else {
     root.amdWeb = factory();
   }
@@ -129,3 +129,4 @@
   return HTMLJanitor;
 
 }));
+//# sourceMappingURL=html-janitor.js.map
