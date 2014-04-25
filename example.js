@@ -1,7 +1,7 @@
 require({
-  baseUrl: './src'
-}, [ 'html-janitor' ], function (HTMLJanitor) {
-  var janitor = new HTMLJanitor({
+  baseUrl: './build'
+}, [ 'html-janitor' ], function (module) {
+  var janitor = new module.HTMLJanitor({
     tags: {
       p: { foo: true, bar: 'baz' }
     }
