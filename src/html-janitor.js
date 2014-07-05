@@ -124,7 +124,8 @@
 
   function createTreeWalker(node) {
     return document.createTreeWalker(node,
-                                     NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT);
+                                     NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT,
+                                     null, false);
   }
 
   return HTMLJanitor;
