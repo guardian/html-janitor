@@ -7,7 +7,8 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         b: {},
         p: { foo: true, bar: 'baz' },
         ul: {},
-        li: {}
+        li: {},
+        span: true
       }
 
 
@@ -29,6 +30,13 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       p.setAttribute('foo', 'true');
       p.setAttribute('bar', 'baz');
       expect(janitor.clean(p.outerHTML)).toBe('<p foo="true" bar="baz"></p>');
+    });
+
+    it('should allow all attributes for elements with catch-all whitelist', function () {
+      var span = document.createElement('span');
+      span.setAttribute('data-test', 'true');
+      span.setAttribute('title', 'test');
+      expect(janitor.clean(span.outerHTML)).toBe('<span data-test="true" title="test"></span>');
     });
 
     it('should remove elements not in the whitelist', function () {
