@@ -1,5 +1,4 @@
-html-janitor
-============
+# html-janitor
 
 Sanitises HTML.
 
