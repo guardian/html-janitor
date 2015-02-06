@@ -1,9 +1,10 @@
-// UMD
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define('html-janitor',factory);
+    define('html-janitor', factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
   } else {
-    root.amdWeb = factory();
+    root.HTMLJanitor = factory();
   }
 }(this, function () {
 
@@ -129,4 +130,6 @@
   return HTMLJanitor;
 
 }));
+
+
 //# sourceMappingURL=html-janitor.js.map
