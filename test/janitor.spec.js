@@ -94,15 +94,25 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       expect(janitor.clean(html)).toBe('<div>Hello world</div>');
     });
 
-    it('should allow nested block elements if configured', function() {
-      var aJanitor = new HTMLJanitor({
-        tags: {
-          div: {}
-        },
-        keepNestedBlockElements: true
-      })
+  });
+
+  describe('janitor that allows nested block elements', function () {
+    var janitor;
+    var config = {
+      tags: {
+        div: {}
+      },
+      keepNestedBlockElements: true
+    };
+
+    beforeEach(function () {
+      janitor = new HTMLJanitor(config);
+    });
+
+
+    it('should allow nested block elements', function() {
       var html = '<div>Hello <div>world</div></div>';
-      expect(aJanitor.clean(html)).toBe('<div>Hello <div>world</div></div>');
+      expect(janitor.clean(html)).toBe('<div>Hello <div>world</div></div>');
     });
 
   });
