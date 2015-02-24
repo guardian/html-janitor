@@ -7,7 +7,8 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         b: {},
         p: { foo: true, bar: 'baz' },
         ul: {},
-        li: {}
+        li: {},
+        div: {}
       }
 
 
@@ -32,10 +33,10 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     });
 
     it('should remove elements not in the whitelist', function () {
-      var div = document.createElement('div');
+      var aside = document.createElement('aside');
       var p = document.createElement('p');
-      div.appendChild(p);
-      expect(janitor.clean(div.outerHTML)).toBe('<p></p>');
+      aside.appendChild(p);
+      expect(janitor.clean(aside.outerHTML)).toBe('<p></p>');
     });
 
     it('should not keep the inner text of a script element', function () {
@@ -83,6 +84,37 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var html = '<p></p>\n';
       expect(janitor.clean(html)).toBe('<p></p>');
     });
+    it('should remove nested span elements', function() {
+      var html ='<p><span>Hello <span>world</span></span></p>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+    });
+
+    it('should not allow nested block elements by default', function() {
+      var html = '<div>Hello <div>world</div></div>';
+      expect(janitor.clean(html)).toBe('<div>Hello world</div>');
+    });
+
+  });
+
+  describe('janitor that allows nested block elements', function () {
+    var janitor;
+    var config = {
+      tags: {
+        div: {}
+      },
+      keepNestedBlockElements: true
+    };
+
+    beforeEach(function () {
+      janitor = new HTMLJanitor(config);
+    });
+
+
+    it('should allow nested block elements', function() {
+      var html = '<div>Hello <div>world</div></div>';
+      expect(janitor.clean(html)).toBe('<div>Hello <div>world</div></div>');
+    });
+
   });
 
 });
