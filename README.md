@@ -11,3 +11,12 @@ bower install html-janitor
 # or
 npm install html-janitor
 ```
+
+## Development
+
+To run unit tests:
+
+```
+npm install
+npm run test
+```
