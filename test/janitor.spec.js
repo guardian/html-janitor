@@ -4,6 +4,9 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var janitor;
     var config = {
       tags: {
+        a: {
+          href: true
+        },
         b: {},
         i: {},
         strong: {},
@@ -125,6 +128,9 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       expect(janitor.clean(html)).toBe('<p>Hello world</p>');
 
       html = '<strike><p>Hello world</p></strike>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<a href="test"><p>Hello world</p></a>';
       expect(janitor.clean(html)).toBe('<p>Hello world</p>');
     });
 
