@@ -8,6 +8,10 @@
   }
 }(this, function () {
 
+  /**
+   * @param {Object} config.tags Dictionary of allowed tags.
+   * @param {boolean} config.keepNestedBlockElements Default false.
+   */
   function HTMLJanitor(config) {
     this.config = config;
   }
@@ -76,8 +80,6 @@
       // Block elements should not be nested (e.g. <li><p>...); if
       // they are, we want to unwrap the inner block element.
       var isNotTopContainer = !! parentNode.parentNode;
-      // TODO: Don't hardcore this — this is not invalid markup. Should be
-      // configurable.
       var isNestedBlockElement =
             isBlockElement(parentNode) &&
             isBlockElement(node) &&
@@ -85,7 +87,7 @@
 
       // Drop tag entirely according to the whitelist *and* if the markup
       // is invalid.
-      if (!this.config.tags[nodeName] || isInvalid || isNestedBlockElement) {
+      if (!this.config.tags[nodeName] || isInvalid || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
         // Do not keep the inner text of SCRIPT/STYLE elements.
         if (! (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
           while (node.childNodes.length > 0) {
@@ -124,7 +126,8 @@
 
   function createTreeWalker(node) {
     return document.createTreeWalker(node,
-                                     NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT);
+                                     NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT,
+                                     null, false);
   }
 
   return HTMLJanitor;
