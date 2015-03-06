@@ -29,7 +29,9 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var p = document.createElement('p');
       p.setAttribute('foo', 'true');
       p.setAttribute('bar', 'baz');
-      expect(janitor.clean(p.outerHTML)).toBe('<p foo="true" bar="baz"></p>');
+      var cleanP = janitor.clean(p.outerHTML);
+      expect(cleanP).toMatch(/foo="true">/);
+      expect(cleanP).toMatch(/bar="baz"/);
     });
 
     it('should remove elements not in the whitelist', function () {
