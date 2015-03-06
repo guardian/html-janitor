@@ -30,7 +30,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       p.setAttribute('foo', 'true');
       p.setAttribute('bar', 'baz');
       var cleanP = janitor.clean(p.outerHTML);
-      expect(cleanP).toMatch(/foo="true">/);
+      expect(cleanP).toMatch(/foo="true"/);
       expect(cleanP).toMatch(/bar="baz"/);
     });
 
