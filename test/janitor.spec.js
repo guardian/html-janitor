@@ -4,7 +4,18 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var janitor;
     var config = {
       tags: {
+        a: {
+          href: true
+        },
         b: {},
+        i: {},
+        strong: {},
+        em: {},
+        sub: {},
+        sup: {},
+        u: {},
+        strike: {},
+
         p: { foo: true, bar: 'baz' },
         ul: {},
         li: {},
@@ -94,6 +105,40 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     it('should not allow nested block elements by default', function() {
       var html = '<div>Hello <div>world</div></div>';
       expect(janitor.clean(html)).toBe('<div>Hello world</div>');
+    });
+
+    it('should not allow nested block elements inside inline elements', function() {
+      var html = '<strong><p>Hello world</p></strong>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<b><p>Hello world</p></b>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<em><p>Hello world</p></em>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<i><p>Hello world</p></i>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<sub><p>Hello world</p></sub>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<sup><p>Hello world</p></sup>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<u><p>Hello world</p></u>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<strike><p>Hello world</p></strike>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<a href="test"><p>Hello world</p></a>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+    });
+
+    it('should allow inline elements inside block elements', function() {
+      var html = '<p>Hello <strong>world</strong></p>';
+      expect(janitor.clean(html)).toBe('<p>Hello <strong>world</strong></p>');
     });
 
   });
