@@ -1,6 +1,12 @@
 # HTML Janitor
 
-Sanitises HTML to a subset
+Sanitises HTML to a whitelist that you can control
+
+## 1.0.0
+
+Changes the definition of what constitutes a block tag and also the code will now strip out incorrectly nested block and inline tags.
+
+Thanks to [Ankit Ahuja](https://github.com/ankit) for this contribution.
 
 ## 0.3.2
 
