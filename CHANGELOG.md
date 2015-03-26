@@ -2,6 +2,10 @@
 
 Sanitises HTML to a whitelist that you can control
 
+## 1.0.1
+
+PRE has been added to the list of block elements
+
 ## 1.0.0
 
 Changes the definition of what constitutes a block tag and also the code will now strip out incorrectly nested block and inline tags.
