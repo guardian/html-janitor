@@ -1,6 +1,6 @@
 {
   "name": "html-janitor",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "main": "./html-janitor.js",
   "authors": [
     "Oliver Joseph Ash <oliverjash@icloud.com>"
