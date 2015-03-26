@@ -17,7 +17,7 @@
   }
 
   // TODO: not exhaustive?
-  var blockElementNames = ['P', 'LI', 'TD', 'TH', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+  var blockElementNames = ['P', 'LI', 'TD', 'TH', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'PRE'];
   function isBlockElement(node) {
     return blockElementNames.indexOf(node.nodeName) !== -1;
   }
