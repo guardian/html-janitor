@@ -17,9 +17,14 @@
   }
 
   // TODO: not exhaustive?
-  var blockElementNames = ['P', 'LI', 'DIV'];
+  var blockElementNames = ['P', 'LI', 'TD', 'TH', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'PRE'];
   function isBlockElement(node) {
     return blockElementNames.indexOf(node.nodeName) !== -1;
+  }
+
+  var inlineElementNames = ['A', 'B', 'STRONG', 'I', 'EM', 'SUB', 'SUP', 'U', 'STRIKE'];
+  function isInlineElement(node) {
+    return inlineElementNames.indexOf(node.nodeName) !== -1;
   }
 
   HTMLJanitor.prototype.clean = function (html) {
@@ -69,13 +74,13 @@
         break;
       }
 
-      var isInlineElement = nodeName === 'b';
+      var isInline = isInlineElement(node);
       var containsBlockElement;
-      if (isInlineElement) {
+      if (isInline) {
         containsBlockElement = Array.prototype.some.call(node.childNodes, isBlockElement);
       }
 
-      var isInvalid = isInlineElement && containsBlockElement;
+      var isInvalid = isInline && containsBlockElement;
 
       // Block elements should not be nested (e.g. <li><p>...); if
       // they are, we want to unwrap the inner block element.
