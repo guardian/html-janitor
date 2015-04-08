@@ -9,7 +9,7 @@ HTMLJanitor uses a defined whitelist to limit HTML it is given to a defined subs
 ## Usage
 
 ```
-var janitor = HTMLJanitor(options);
+var janitor = new HTMLJanitor(options);
 
 var sanitisedHtml = janitor.clean(html);
 
