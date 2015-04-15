@@ -19,6 +19,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         p: { foo: true, bar: 'baz' },
         ul: {},
         li: {},
+        span: true,
         div: {}
       }
 
@@ -43,6 +44,13 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var cleanP = janitor.clean(p.outerHTML);
       expect(cleanP).toMatch(/foo="true"/);
       expect(cleanP).toMatch(/bar="baz"/);
+    });
+
+    it('should allow all attributes for elements with catch-all whitelist', function () {
+      var span = document.createElement('span');
+      span.setAttribute('data-test', 'true');
+      span.setAttribute('title', 'test');
+      expect(janitor.clean(span.outerHTML)).toBe('<span data-test="true" title="test"></span>');
     });
 
     it('should remove elements not in the whitelist', function () {

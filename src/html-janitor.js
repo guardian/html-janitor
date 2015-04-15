@@ -111,7 +111,7 @@
         var attrName = attr.name.toLowerCase();
 
         // Allow attribute?
-        var allowedAttrValue = allowedAttrs[attrName];
+        var allowedAttrValue = allowedAttrs[attrName] || allowedAttrs === true;
         var notInAttrList = ! allowedAttrValue;
         var valueNotAllowed = allowedAttrValue !== true && attr.value !== allowedAttrValue;
         if (notInAttrList || valueNotAllowed) {
