@@ -19,7 +19,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         p: { foo: true, bar: 'baz' },
         ul: {},
         li: {},
-        span: true,
+        small: true,
         div: {}
       }
 
@@ -44,13 +44,6 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var cleanP = janitor.clean(p.outerHTML);
       expect(cleanP).toMatch(/foo="true"/);
       expect(cleanP).toMatch(/bar="baz"/);
-    });
-
-    it('should allow all attributes for elements with catch-all whitelist', function () {
-      var span = document.createElement('span');
-      span.setAttribute('data-test', 'true');
-      span.setAttribute('title', 'test');
-      expect(janitor.clean(span.outerHTML)).toBe('<span data-test="true" title="test"></span>');
     });
 
     it('should remove elements not in the whitelist', function () {
@@ -147,6 +140,29 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     it('should allow inline elements inside block elements', function() {
       var html = '<p>Hello <strong>world</strong></p>';
       expect(janitor.clean(html)).toBe('<p>Hello <strong>world</strong></p>');
+    });
+
+
+    it('should allow all attributes for elements with catch-all whitelist', function () {
+      var el = document.createElement('small');
+      el.setAttribute('data-test', 'true');
+      el.setAttribute('title', 'test');
+      
+      var outputEl = document.createElement('div');
+      outputEl.innerHTML = janitor.clean(el.outerHTML);
+
+      var output = outputEl.children[0];
+
+      expect(output.tagName).toBe('SMALL');
+
+      var attributes = output.attributes;
+
+      expect(attributes.getNamedItem('data-test').name).toBe('data-test');
+      expect(attributes.getNamedItem('data-test').value).toBe('true');
+      
+      expect(attributes.getNamedItem('title').name).toBe('title');
+      expect(attributes.getNamedItem('title').value).toBe('test');
+
     });
 
   });
