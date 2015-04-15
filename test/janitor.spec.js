@@ -4,11 +4,23 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     var janitor;
     var config = {
       tags: {
+        a: {
+          href: true
+        },
         b: {},
+        i: {},
+        strong: {},
+        em: {},
+        sub: {},
+        sup: {},
+        u: {},
+        strike: {},
+
         p: { foo: true, bar: 'baz' },
         ul: {},
         li: {},
-        span: true
+        span: true,
+        div: {}
       }
 
 
@@ -29,7 +41,9 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var p = document.createElement('p');
       p.setAttribute('foo', 'true');
       p.setAttribute('bar', 'baz');
-      expect(janitor.clean(p.outerHTML)).toBe('<p foo="true" bar="baz"></p>');
+      var cleanP = janitor.clean(p.outerHTML);
+      expect(cleanP).toMatch(/foo="true"/);
+      expect(cleanP).toMatch(/bar="baz"/);
     });
 
     it('should allow all attributes for elements with catch-all whitelist', function () {
@@ -40,10 +54,10 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     });
 
     it('should remove elements not in the whitelist', function () {
-      var div = document.createElement('div');
+      var aside = document.createElement('aside');
       var p = document.createElement('p');
-      div.appendChild(p);
-      expect(janitor.clean(div.outerHTML)).toBe('<p></p>');
+      aside.appendChild(p);
+      expect(janitor.clean(aside.outerHTML)).toBe('<p></p>');
     });
 
     it('should not keep the inner text of a script element', function () {
@@ -91,6 +105,71 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var html = '<p></p>\n';
       expect(janitor.clean(html)).toBe('<p></p>');
     });
+    it('should remove nested span elements', function() {
+      var html ='<p><span>Hello <span>world</span></span></p>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+    });
+
+    it('should not allow nested block elements by default', function() {
+      var html = '<div>Hello <div>world</div></div>';
+      expect(janitor.clean(html)).toBe('<div>Hello world</div>');
+    });
+
+    it('should not allow nested block elements inside inline elements', function() {
+      var html = '<strong><p>Hello world</p></strong>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<b><p>Hello world</p></b>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<em><p>Hello world</p></em>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<i><p>Hello world</p></i>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<sub><p>Hello world</p></sub>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<sup><p>Hello world</p></sup>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<u><p>Hello world</p></u>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<strike><p>Hello world</p></strike>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+
+      html = '<a href="test"><p>Hello world</p></a>';
+      expect(janitor.clean(html)).toBe('<p>Hello world</p>');
+    });
+
+    it('should allow inline elements inside block elements', function() {
+      var html = '<p>Hello <strong>world</strong></p>';
+      expect(janitor.clean(html)).toBe('<p>Hello <strong>world</strong></p>');
+    });
+
+  });
+
+  describe('janitor that allows nested block elements', function () {
+    var janitor;
+    var config = {
+      tags: {
+        div: {}
+      },
+      keepNestedBlockElements: true
+    };
+
+    beforeEach(function () {
+      janitor = new HTMLJanitor(config);
+    });
+
+
+    it('should allow nested block elements', function() {
+      var html = '<div>Hello <div>world</div></div>';
+      expect(janitor.clean(html)).toBe('<div>Hello <div>world</div></div>');
+    });
+
   });
 
 });
