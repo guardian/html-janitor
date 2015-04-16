@@ -2,6 +2,14 @@
 
 Sanitises HTML to a whitelist that you can control
 
+## 1.1.0
+
+It should be possible to allow all attributes on an element. This was mentioned in the documentation but was not working as intended.
+
+As the previous behaviour was broken I don't believe anyone was using it but if you were then hopefully it will just magically work for you now.
+
+Thanks [Alex Palaistras](https://github.com/deuill) for fixing this.
+
 ## 1.0.1
 
 PRE has been added to the list of block elements
