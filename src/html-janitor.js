@@ -92,7 +92,7 @@
 
       // Drop tag entirely according to the whitelist *and* if the markup
       // is invalid.
-      if (!this.config.tags[nodeName] || isInvalid || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
+      if (this.config.tags[nodeName] === undefined || isInvalid || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
         // Do not keep the inner text of SCRIPT/STYLE elements.
         if (! (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
           while (node.childNodes.length > 0) {

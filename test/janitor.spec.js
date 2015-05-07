@@ -20,7 +20,8 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         ul: {},
         li: {},
         small: true,
-        div: {}
+        div: {},
+        figure: false
       }
 
 
@@ -163,6 +164,15 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       expect(attributes.getNamedItem('title').name).toBe('title');
       expect(attributes.getNamedItem('title').value).toBe('test');
 
+    });
+
+    it('should remove an element if blacklisted', function() {
+        var el = document.createElement('figure');
+        el.setAttribute('class', 'test');
+
+        var output = janitor.clean(el.outerHTML);
+
+        expect(output).toBe('<figure></figure>');
     });
 
   });
