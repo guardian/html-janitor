@@ -13,6 +13,18 @@
    * @param {boolean} config.keepNestedBlockElements Default false.
    */
   function HTMLJanitor(config) {
+
+    var tagDefinitions = config['tags'];
+    var tags = Object.keys(tagDefinitions);
+
+    var validConfigValues = tags
+      .map(function(k) { return typeof(tagDefinitions[k]); })
+      .filter(function(type) { return type === 'object' || type === 'boolean'; });
+
+    if(validConfigValues.length !== tags.length) {
+      throw new Error("The configuration was invalid");
+    }
+
     this.config = config;
   }
 

@@ -198,4 +198,18 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
 
   });
 
+  describe('janitor with invalid configuration', function() {
+
+    var config = {
+      tags: {
+        strong: 53
+      }
+    };
+
+    it('should throw an Error on invalid configuration', function() {
+      expect(function() {new HTMLJanitor(config)}).toThrow(new Error('The configuration was invalid'));
+    });
+
+  });
+
 });
