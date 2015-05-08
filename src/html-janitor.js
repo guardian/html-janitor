@@ -19,9 +19,9 @@
 
     var validConfigValues = tags
       .map(function(k) { return typeof(tagDefinitions[k]); })
-      .filter(function(type) { return type === 'object' || type === 'boolean'; });
+      .every(function(type) { return type === 'object' || type === 'boolean'; });
 
-    if(validConfigValues.length !== tags.length) {
+    if(!validConfigValues) {
       throw new Error("The configuration was invalid");
     }
 
