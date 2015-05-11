@@ -21,7 +21,7 @@ A configuration object.
 
 `tags` defines a whitelist of elements that are allowed in the sanitised output. Each entry in the map should be the name of the element and the attributes that a valid for the element.
 
-E.g. `{tags: { p:{}, a: { href: true} }}` would limit the valid HTML subset to just paragraphs and anchor tags, the anchor tags would only have the `href` attribute preserved.
+E.g. `{tags: { p:{}, a: { href: true} }}` would limit the valid HTML subset to just paragraphs and anchor tags. Paragraph tags would have all attributes stripped, and the anchor tags would only have the `href` attribute preserved.
 
 ## Distribution
 
