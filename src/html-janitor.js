@@ -18,7 +18,7 @@
     var tags = Object.keys(tagDefinitions);
 
     var validConfigValues = tags
-      .map(function(k) { return typeof(tagDefinitions[k]); })
+      .map(function(k) { return typeof tagDefinitions[k]; })
       .every(function(type) { return type === 'object' || type === 'boolean'; });
 
     if(!validConfigValues) {
