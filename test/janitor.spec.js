@@ -20,7 +20,8 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         ul: {},
         li: {},
         small: true,
-        div: {}
+        div: {},
+        figure: false
       }
 
 
@@ -165,6 +166,15 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
 
     });
 
+    it('should remove an element if blacklisted', function() {
+        var el = document.createElement('figure');
+        el.setAttribute('class', 'test');
+
+        var output = janitor.clean(el.outerHTML);
+
+        expect(output).toBe('<figure></figure>');
+    });
+
   });
 
   describe('janitor that allows nested block elements', function () {
@@ -184,6 +194,20 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
     it('should allow nested block elements', function() {
       var html = '<div>Hello <div>world</div></div>';
       expect(janitor.clean(html)).toBe('<div>Hello <div>world</div></div>');
+    });
+
+  });
+
+  describe('janitor with invalid configuration', function() {
+
+    var config = {
+      tags: {
+        strong: 53
+      }
+    };
+
+    it('should throw an Error on invalid configuration', function() {
+      expect(function() {new HTMLJanitor(config)}).toThrow(new Error('The configuration was invalid'));
     });
 
   });

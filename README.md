@@ -23,6 +23,10 @@ A configuration object.
 
 E.g. `{tags: { p:{}, a: { href: true} }}` would limit the valid HTML subset to just paragraphs and anchor tags. Paragraph tags would have all attributes stripped, and the anchor tags would only have the `href` attribute preserved.
 
+#### Blacklisting and whitelisting attributes
+
+You can set an element to be `true` to allow all attributes on an element and `false` to remove all attributes.
+
 ## Distribution
 
 Uses UMD for support in AMD and Common JS environments.
