@@ -2,6 +2,10 @@
 
 Sanitises HTML to a whitelist that you can control
 
+## 2.0.0
+
+Makes element configuration (e.g. p: true/false) symmetrical. Previously setting and element to false remove the element completely from the cleaned output.
+
 ## 1.1.0
 
 It should be possible to allow all attributes on an element. This was mentioned in the documentation but was not working as intended.
