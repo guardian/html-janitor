@@ -13,6 +13,18 @@
    * @param {boolean} config.keepNestedBlockElements Default false.
    */
   function HTMLJanitor(config) {
+
+    var tagDefinitions = config['tags'];
+    var tags = Object.keys(tagDefinitions);
+
+    var validConfigValues = tags
+      .map(function(k) { return typeof tagDefinitions[k]; })
+      .every(function(type) { return type === 'object' || type === 'boolean'; });
+
+    if(!validConfigValues) {
+      throw new Error("The configuration was invalid");
+    }
+
     this.config = config;
   }
 
@@ -92,7 +104,7 @@
 
       // Drop tag entirely according to the whitelist *and* if the markup
       // is invalid.
-      if (!this.config.tags[nodeName] || isInvalid || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
+      if (this.config.tags[nodeName] === undefined || isInvalid || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
         // Do not keep the inner text of SCRIPT/STYLE elements.
         if (! (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
           while (node.childNodes.length > 0) {
@@ -111,7 +123,7 @@
         var attrName = attr.name.toLowerCase();
 
         // Allow attribute?
-        var allowedAttrValue = allowedAttrs[attrName];
+        var allowedAttrValue = allowedAttrs[attrName] || allowedAttrs === true;
         var notInAttrList = ! allowedAttrValue;
         var valueNotAllowed = allowedAttrValue !== true && attr.value !== allowedAttrValue;
         if (notInAttrList || valueNotAllowed) {
