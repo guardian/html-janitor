@@ -5,6 +5,10 @@
   "scripts": {
     "test": "karma start --single-run"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guardian/html-janitor.git"
+  },
   "devDependencies": {
     "karma": "~0.10.2",
     "karma-chrome-launcher": "~0.1.0",
