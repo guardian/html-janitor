@@ -13,7 +13,6 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         em: {},
         sub: {},
         sup: {},
-        u: {},
         strike: {},
 
         p: { foo: true, bar: 'baz' },
@@ -21,7 +20,22 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         li: {},
         small: true,
         div: {},
-        figure: false
+        figure: false,
+        u: function(el){
+          // Remove empty underline tags.
+          var shouldKeepEl = el.innerHTML !== '';
+          return shouldKeepEl;
+        },
+        img: {
+          height: function(value){
+            // Only allow if height is less than 10.
+            return parseInt(value) < 10;
+          },
+          width: function(value, el){
+            // Only allow if height also specified.
+            return el.hasAttribute('height');
+          }
+        }
       }
 
 
@@ -148,7 +162,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       var el = document.createElement('small');
       el.setAttribute('data-test', 'true');
       el.setAttribute('title', 'test');
-      
+
       var outputEl = document.createElement('div');
       outputEl.innerHTML = janitor.clean(el.outerHTML);
 
@@ -160,7 +174,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
 
       expect(attributes.getNamedItem('data-test').name).toBe('data-test');
       expect(attributes.getNamedItem('data-test').value).toBe('true');
-      
+
       expect(attributes.getNamedItem('title').name).toBe('title');
       expect(attributes.getNamedItem('title').value).toBe('test');
 
@@ -175,6 +189,29 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
         expect(output).toBe('<figure></figure>');
     });
 
+    it('should handle functions as options', function () {
+      var html = '<div><u>content</u></div>';
+      expect(janitor.clean(html)).toBe('<div><u>content</u></div>');
+
+      html = '<div><u></u></div>';
+      expect(janitor.clean(html)).toBe('<div></div>');
+    });
+
+    it('should handle functions as options for attributes', function () {
+      var html = '<img height="11">';
+      expect(janitor.clean(html)).toBe('<img>');
+
+      html = '<img height="9">';
+      expect(janitor.clean(html)).toBe('<img height="9">');
+    });
+
+    it('should also handle functions for attributes that take an element', function () {
+      var html = '<img width="1">';
+      expect(janitor.clean(html)).toBe('<img>');
+
+      html = '<img height="9" width="1">';
+      expect(janitor.clean(html)).toBe('<img height="9" width="1">');
+    });
   });
 
   describe('janitor that allows nested block elements', function () {

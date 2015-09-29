@@ -19,7 +19,7 @@
 
     var validConfigValues = tags
       .map(function(k) { return typeof tagDefinitions[k]; })
-      .every(function(type) { return type === 'object' || type === 'boolean'; });
+      .every(function(type) { return type === 'object' || type === 'boolean' || type === 'function'; });
 
     if(!validConfigValues) {
       throw new Error("The configuration was invalid");
@@ -54,9 +54,6 @@
     if (!node) { return; }
 
     do {
-      var nodeName = node.nodeName.toLowerCase();
-      var allowedAttrs = this.config.tags[nodeName];
-
       // Ignore nodes that have already been sanitized
       if (node._sanitized) {
         continue;
@@ -92,8 +89,6 @@
         containsBlockElement = Array.prototype.some.call(node.childNodes, isBlockElement);
       }
 
-      var isInvalid = isInline && containsBlockElement;
-
       // Block elements should not be nested (e.g. <li><p>...); if
       // they are, we want to unwrap the inner block element.
       var isNotTopContainer = !! parentNode.parentNode;
@@ -102,9 +97,24 @@
             isBlockElement(node) &&
             isNotTopContainer;
 
+      var nodeName = node.nodeName.toLowerCase();
+      var allowedAttrs = this.config.tags[nodeName];
+
+      var shouldReject = false;
+
+      if (isInline && containsBlockElement){
+        // Element is invalid.
+        shouldReject = true;
+      } else if (typeof this.config.tags[nodeName] === 'undefined') {
+        // Element doesn't exist.
+        shouldReject = true;
+      } else if (typeof this.config.tags[nodeName] === 'function'){
+        shouldReject = !this.config.tags[nodeName](node);
+      }
+
       // Drop tag entirely according to the whitelist *and* if the markup
       // is invalid.
-      if (this.config.tags[nodeName] === undefined || isInvalid || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
+      if (shouldReject || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
         // Do not keep the inner text of SCRIPT/STYLE elements.
         if (! (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
           while (node.childNodes.length > 0) {
@@ -122,11 +132,21 @@
         var attr = node.attributes[a];
         var attrName = attr.name.toLowerCase();
 
-        // Allow attribute?
-        var allowedAttrValue = allowedAttrs[attrName] || allowedAttrs === true;
-        var notInAttrList = ! allowedAttrValue;
-        var valueNotAllowed = allowedAttrValue !== true && attr.value !== allowedAttrValue;
-        if (notInAttrList || valueNotAllowed) {
+        var shouldRejectAttr = false;
+
+        if (allowedAttrs === true){
+          shouldRejectAttr = false;
+        } else if (typeof allowedAttrs[attrName] === 'function'){
+          shouldRejectAttr = !allowedAttrs[attrName](attr.value, node);
+        } else if (typeof allowedAttrs[attrName] === 'undefined'){
+          shouldRejectAttr = true;
+        } else if (allowedAttrs[attrName] === false) {
+          shouldRejectAttr = true;
+        } else if (typeof allowedAttrs[attrName] === 'string') {
+          shouldRejectAttr = (allowedAttrs[attrName] !== attr.value);
+        }
+
+        if (shouldRejectAttr) {
           node.removeAttribute(attr.name);
           // Shift the array to continue looping.
           a = a - 1;
