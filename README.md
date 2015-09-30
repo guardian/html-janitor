@@ -23,9 +23,39 @@ A configuration object.
 
 E.g. `{tags: { p:{}, a: { href: true} }}` would limit the valid HTML subset to just paragraphs and anchor tags. Paragraph tags would have all attributes stripped, and the anchor tags would only have the `href` attribute preserved.
 
-#### Blacklisting and whitelisting attributes
+#### Blacklisting and whitelisting all attributes
 
 You can set an element to be `true` to allow all attributes on an element and `false` to remove all attributes.
+
+#### Using logic
+
+If you need to apply logic when determining whether to whitelist an element or an attribute, you can pass a function.
+
+Here's an example that removes all `<u>` elements that are empty.
+
+```
+    u: function(el){
+      // Remove empty underline tags.
+      var shouldKeep = el.textContent !== '';
+      return shouldKeep;
+    },
+```
+
+A function can also be used for attributes, only the attribute's value and the element are passed as the function arguments:
+
+```
+     img: {
+      height: function(value){
+        // Only allow if height is less than 10.
+        return parseInt(value) < 10;
+      },
+      width: function(value, el){
+        // Only allow if height also specified.
+        return el.hasAttribute('height');
+      }
+    }
+```
+
 
 ## Distribution
 
