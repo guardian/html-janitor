@@ -2,6 +2,12 @@
 
 Sanitises HTML to a whitelist that you can control
 
+## 2.0.1
+
+Adds the ability to configure HTML Janitor with validation functions that determine whether a given element should be allowed programatically.
+
+Thanks [Brad Vogel](https://github.com/bradvogel) for adding this functionality.
+
 ## 2.0.0
 
 Makes element configuration (e.g. p: true/false) symmetrical. Previously setting and element to false remove the element completely from the cleaned output.
