@@ -100,21 +100,12 @@
       var nodeName = node.nodeName.toLowerCase();
       var allowedAttrs = this.config.tags[nodeName];
 
-      var shouldReject = false;
-
-      if (isInline && containsBlockElement){
-        // Element is invalid.
-        shouldReject = true;
-      } else if (typeof this.config.tags[nodeName] === 'undefined') {
-        // Element doesn't exist.
-        shouldReject = true;
-      } else if (typeof this.config.tags[nodeName] === 'function'){
-        shouldReject = !this.config.tags[nodeName](node);
-      }
+      var isInvalid = isInline && containsBlockElement;
 
       // Drop tag entirely according to the whitelist *and* if the markup
       // is invalid.
-      if (shouldReject || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
+      if (isInvalid || shouldRejectNode(node, allowedAttrs)
+          || (!this.config.keepNestedBlockElements && isNestedBlockElement)) {
         // Do not keep the inner text of SCRIPT/STYLE elements.
         if (! (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
           while (node.childNodes.length > 0) {
@@ -130,23 +121,8 @@
       // Sanitize attributes
       for (var a = 0; a < node.attributes.length; a += 1) {
         var attr = node.attributes[a];
-        var attrName = attr.name.toLowerCase();
 
-        var shouldRejectAttr = false;
-
-        if (allowedAttrs === true){
-          shouldRejectAttr = false;
-        } else if (typeof allowedAttrs[attrName] === 'function'){
-          shouldRejectAttr = !allowedAttrs[attrName](attr.value, node);
-        } else if (typeof allowedAttrs[attrName] === 'undefined'){
-          shouldRejectAttr = true;
-        } else if (allowedAttrs[attrName] === false) {
-          shouldRejectAttr = true;
-        } else if (typeof allowedAttrs[attrName] === 'string') {
-          shouldRejectAttr = (allowedAttrs[attrName] !== attr.value);
-        }
-
-        if (shouldRejectAttr) {
+        if (shouldRejectAttr(attr, allowedAttrs, node)) {
           node.removeAttribute(attr.name);
           // Shift the array to continue looping.
           a = a - 1;
@@ -165,6 +141,34 @@
     return document.createTreeWalker(node,
                                      NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT,
                                      null, false);
+  }
+
+  function shouldRejectNode(node, allowedAttrs){
+    if (typeof allowedAttrs === 'undefined') {
+      return true;
+    } else if (typeof allowedAttrs === 'function'){
+      return !allowedAttrs(node);
+    }
+
+    return false;
+  }
+
+  function shouldRejectAttr(attr, allowedAttrs, node){
+    var attrName = attr.name.toLowerCase();
+
+    if (allowedAttrs === true){
+      return false;
+    } else if (typeof allowedAttrs[attrName] === 'function'){
+      return !allowedAttrs[attrName](attr.value, node);
+    } else if (typeof allowedAttrs[attrName] === 'undefined'){
+      return true;
+    } else if (allowedAttrs[attrName] === false) {
+      return true;
+    } else if (typeof allowedAttrs[attrName] === 'string') {
+      return (allowedAttrs[attrName] !== attr.value);
+    }
+
+    return false;
   }
 
   return HTMLJanitor;
