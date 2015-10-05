@@ -99,12 +99,7 @@
 
       var nodeName = node.nodeName.toLowerCase();
 
-      var allowedAttrs;
-      if (typeof this.config.tags[nodeName] === 'function') {
-        allowedAttrs = this.config.tags[nodeName](node);
-      } else {
-        allowedAttrs = this.config.tags[nodeName];
-      }
+      var allowedAttrs = getAllowedAttrs(this.config, nodeName, node);
 
       var isInvalid = isInline && containsBlockElement;
 
@@ -147,6 +142,14 @@
     return document.createTreeWalker(node,
                                      NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT,
                                      null, false);
+  }
+
+  function getAllowedAttrs(config, nodeName, node){
+    if (typeof config.tags[nodeName] === 'function') {
+      return config.tags[nodeName](node);
+    } else {
+      return config.tags[nodeName];
+    }
   }
 
   function shouldRejectNode(node, allowedAttrs){
