@@ -98,7 +98,13 @@
             isNotTopContainer;
 
       var nodeName = node.nodeName.toLowerCase();
-      var allowedAttrs = this.config.tags[nodeName];
+
+      var allowedAttrs;
+      if (typeof this.config.tags[nodeName] === 'function') {
+        allowedAttrs = this.config.tags[nodeName](node);
+      } else {
+        allowedAttrs = this.config.tags[nodeName];
+      }
 
       var isInvalid = isInline && containsBlockElement;
 
@@ -146,8 +152,8 @@
   function shouldRejectNode(node, allowedAttrs){
     if (typeof allowedAttrs === 'undefined') {
       return true;
-    } else if (typeof allowedAttrs === 'function'){
-      return !allowedAttrs(node);
+    } else if (typeof allowedAttrs === 'boolean') {
+      return !allowedAttrs;
     }
 
     return false;

@@ -56,6 +56,19 @@ A function can also be used for attributes, only the attribute's value and the e
     }
 ```
 
+Functions may return any value that's accepted as a regular value, including an object:
+
+```
+     blockquote: function(el) {
+      if (el.classList.contains('indent')){
+        return { 'class': true, 'style': true }; // If blockquote has class 'indent', also allow style.
+      } else {
+        return {}; // Strip everything
+      }
+    }
+
+```
+
 
 ## Distribution
 
