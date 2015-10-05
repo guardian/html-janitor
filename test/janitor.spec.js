@@ -194,7 +194,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
 
         var output = janitor.clean(el.outerHTML);
 
-        expect(output).toBe('<figure></figure>');
+        expect(output).toBe('');
     });
 
     it('should handle functions as options', function () {
