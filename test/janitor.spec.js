@@ -35,6 +35,14 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
             // Only allow if height also specified.
             return el.hasAttribute('height');
           }
+        },
+        blockquote: function(el) {
+          // If blockquote has class 'indent', also allow style.
+          if (el.classList.contains('indent')){
+            return { 'class': true, 'style': true };
+          } else {
+            return {};
+          }
         }
       }
 
@@ -186,7 +194,7 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
 
         var output = janitor.clean(el.outerHTML);
 
-        expect(output).toBe('<figure></figure>');
+        expect(output).toBe('');
     });
 
     it('should handle functions as options', function () {
@@ -212,6 +220,15 @@ define([ 'html-janitor' ], function (HTMLJanitor) {
       html = '<img height="9" width="1">';
       expect(janitor.clean(html)).toBe('<img height="9" width="1">');
     });
+
+    it('should allow certain attributes', function() {
+      var html = '<blockquote class="indent" style="display:inline" notallowedattr="1"></blockquote>';
+      expect(janitor.clean(html)).toBe('<blockquote class="indent" style="display:inline"></blockquote>');
+
+      html = '<blockquote style="display:inline"></blockquote>';
+      expect(janitor.clean(html)).toBe('<blockquote></blockquote>');
+    });
+
   });
 
   describe('janitor that allows nested block elements', function () {
