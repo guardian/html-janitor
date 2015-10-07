@@ -2,6 +2,12 @@
 
 Sanitises HTML to a whitelist that you can control
 
+## 2.0.2
+
+Validation functions can now return validation objects rather than simply outcomes.
+
+Thanks to [Brad Vogel](https://github.com/bradvogel) for this functionality.
+
 ## 2.0.1
 
 Adds the ability to configure HTML Janitor with validation functions that determine whether a given element should be allowed programatically.
