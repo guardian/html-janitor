@@ -4,7 +4,7 @@ Cleans up your markup and allows you to take control of your HTML.
 
 HTMLJanitor uses a defined whitelist to limit HTML it is given to a defined subset.
 
-![](https://circleci.com/gh/guardian/html-janitor.png?circle-token=bd24300ee650966837a73bfe03386828f0192c06)
+![](https://circleci.com/gh/guardian/html-janitor.png?circle-token=bd24300ee650966837a73bfe03386828f0192c06) <img src="https://david-dm.org/guardian/html-janitor.svg">
 
 ## Usage
 
