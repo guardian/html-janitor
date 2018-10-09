@@ -88,8 +88,6 @@ This library is designed for use in a browser and requires access to [document](
 ## Installation
 
 ```
-bower install html-janitor
-# or
 npm install html-janitor
 ```
 
