@@ -54,11 +54,6 @@
     if (!node) { return; }
 
     do {
-      // Ignore nodes that have already been sanitized
-      if (node._sanitized) {
-        continue;
-      }
-
       if (node.nodeType === Node.TEXT_NODE) {
         // If this text node is just whitespace and the previous or next element
         // sibling is a block element, remove it
@@ -133,8 +128,6 @@
       // Sanitize children
       this._sanitize(node);
 
-      // Mark node as sanitized so it's ignored in future runs
-      node._sanitized = true;
     } while ((node = treeWalker.nextSibling()));
   };
 
