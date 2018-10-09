@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>html-janitor</title>
+  </head>
+  <body>
+    <script src="../src/html-janitor.js"></script>
+    <script type="text/javascript">
+      const janitor = new HTMLJanitor({
+        tags: {
+          p: { foo: true, bar: 'baz' }
+        }
+      });
+
+      const p = document.createElement('p');
+      p.setAttribute('style', 'font-size: 16px;');
+      p.setAttribute('bar', 'baz');
+      p.setAttribute('foo', 'fighter');
+
+      // The result will not have the 'style' attribute anymore
+      console.log(janitor.clean(p.outerHTML));
+    </script>
+  </body>
+</html>
