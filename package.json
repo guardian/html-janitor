@@ -1,26 +1,15 @@
 {
   "name": "html-janitor",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "main": "src/html-janitor.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/guardian/html-janitor.git"
   },
   "devDependencies": {
-    "karma": "~0.10.2",
-    "karma-chrome-launcher": "~0.1.0",
-    "karma-jasmine": "~0.1.3",
-    "karma-phantomjs-launcher": "~0.1.0",
-    "karma-firefox-launcher": "~0.1",
-    "karma-requirejs": "~0.2.0",
-    "plumber": "~0.4.0",
-    "plumber-all": "~0.4.0",
-    "plumber-glob": "~0.4.0",
-    "plumber-requirejs": "~0.4.0",
-    "plumber-uglifyjs": "~0.4.0",
-    "plumber-write": "~0.4.0"
+    "jest": "^23.6.0"
   }
 }
