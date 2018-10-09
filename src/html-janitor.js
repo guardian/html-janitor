@@ -40,17 +40,19 @@
   }
 
   HTMLJanitor.prototype.clean = function (html) {
-    var sandbox = document.createElement('div');
-    sandbox.innerHTML = html;
+    const sandbox = document.implementation.createHTMLDocument();
+    const root = sandbox.createElement("div");
+    root.innerHTML = html;
 
-    this._sanitize(sandbox);
+    this._sanitize(sandbox, root);
 
-    return sandbox.innerHTML;
+    return root.innerHTML;
   };
 
-  HTMLJanitor.prototype._sanitize = function (parentNode) {
-    var treeWalker = createTreeWalker(parentNode);
+  HTMLJanitor.prototype._sanitize = function (document, parentNode) {
+    var treeWalker = createTreeWalker(document, parentNode);
     var node = treeWalker.firstChild();
+
     if (!node) { return; }
 
     do {
@@ -64,7 +66,7 @@
             && ((node.previousElementSibling && isBlockElement(node.previousElementSibling))
                  || (node.nextElementSibling && isBlockElement(node.nextElementSibling)))) {
           parentNode.removeChild(node);
-          this._sanitize(parentNode);
+          this._sanitize(document, parentNode);
           break;
         } else {
           continue;
@@ -74,7 +76,7 @@
       // Remove all comments
       if (node.nodeType === Node.COMMENT_NODE) {
         parentNode.removeChild(node);
-        this._sanitize(parentNode);
+        this._sanitize(document, parentNode);
         break;
       }
 
@@ -110,7 +112,7 @@
         }
         parentNode.removeChild(node);
 
-        this._sanitize(parentNode);
+        this._sanitize(document, parentNode);
         break;
       }
 
@@ -126,12 +128,12 @@
       }
 
       // Sanitize children
-      this._sanitize(node);
+      this._sanitize(document, node);
 
     } while ((node = treeWalker.nextSibling()));
   };
 
-  function createTreeWalker(node) {
+  function createTreeWalker(document, node) {
     return document.createTreeWalker(node,
                                      NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT,
                                      null, false);
