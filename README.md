@@ -8,10 +8,10 @@ HTMLJanitor uses a defined whitelist to limit HTML it is given to a defined subs
 
 ## XSS Note
 
-This library has not been tested for use with unsanitised user input. In particular versions prior to 2.0.3 are vulnerable to XSS attacks.
+This library has not been extensively tested. In particular versions prior to 2.0.3 are vulnerable to XSS attacks.
 See [here](https://hackerone.com/reports/308155) and [here](https://hackerone.com/reports/308158).
 
-Please upgrade to 2.0.4 or above and consider building your own checks on user input rather than relying on this library.
+Please upgrade to 2.0.4 or above and consider building your own additional checks on user input.
 
 ## Usage
 
