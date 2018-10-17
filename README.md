@@ -6,6 +6,13 @@ HTMLJanitor uses a defined whitelist to limit HTML it is given to a defined subs
 
 ![](https://circleci.com/gh/guardian/html-janitor.png?circle-token=bd24300ee650966837a73bfe03386828f0192c06) <img src="https://david-dm.org/guardian/html-janitor.svg">
 
+## XSS Note
+
+This library has not been extensively tested. In particular versions prior to 2.0.3 are vulnerable to XSS attacks.
+See [here](https://hackerone.com/reports/308155) and [here](https://hackerone.com/reports/308158).
+
+Please upgrade to 2.0.4 or above and consider building your own additional checks on user input.
+
 ## Usage
 
 ```
@@ -81,8 +88,6 @@ This library is designed for use in a browser and requires access to [document](
 ## Installation
 
 ```
-bower install html-janitor
-# or
 npm install html-janitor
 ```
 
