@@ -4,6 +4,10 @@ Sanitises HTML to a whitelist that you can control
 
 ## 2.0.2
 
+Tidy dependencies and fix XSS vulernability.
+
+## 2.0.2
+
 Validation functions can now return validation objects rather than simply outcomes.
 
 Thanks to [Brad Vogel](https://github.com/bradvogel) for this functionality.
