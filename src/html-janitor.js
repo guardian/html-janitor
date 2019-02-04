@@ -40,7 +40,7 @@
   }
 
   HTMLJanitor.prototype.clean = function (html) {
-    const sandbox = document.implementation.createHTMLDocument();
+    const sandbox = document.implementation.createHTMLDocument('');
     const root = sandbox.createElement("div");
     root.innerHTML = html;
 
